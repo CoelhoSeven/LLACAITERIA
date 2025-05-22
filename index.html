@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Aviso de horário */
+    #aviso-horario {
+      display: none;
+      background-color: #ffe0e0;
+      border: 1px solid #ff4c4c;
+      color: #b00000;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 1.1rem;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="aviso-horario">
+    Pedidos só são aceitos das 11:00 às 22:00 horas. Volte nesse horário, por favor!
+  </div>
+
+  <div class="marca-dagua"></div>
+
+  <header>
+    <h1>LL AÇAITERIA & SORVETERIA</h1>
+    <nav>
+      <ul>
+        <li><span class="destaque-menu">O Melhor açaí de Vila Velha</span></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="menu">
+    <h2>Nosso Cardápio</h2>
+
+    <!-- Produto 1 -->
+    <div class="produto">
+      <div class="produto-item">
+        <img src="acai300.png" alt="Copo de Açaí 300ml" />
+        <h3>Copo 300ml</h3>
+        <p>Delicioso açaí no copo de 300ml.</p>
+        <p class="preco">R$ 15,00</p>
+        <button onclick="comprar('Copo 300ml')">Comprar</button>
+      </div>
+      <div class="produto-item">
+        <img src="acai-puro300.png" alt="Açaí Puro 300ml" />
+        <h3>Açaí Puro 300ml</h3>
+        <p>Sabor intenso, puro e natural.</p>
+        <p class="preco">R$ 13,00</p>
+        <button onclick="comprar('Açaí Puro 300ml')">Comprar</button>
+      </div>
+    </div>
+
+    <!-- Produto 2 -->
+    <div class="produto">
+      <div class="produto-item">
+        <img src="acai500.png" alt="Copo de Açaí 500ml" />
+        <h3>Copo 500ml</h3>
+        <p>Açaí no copo de 500ml, perfeito para matar a vontade!</p>
+        <p class="preco">R$ 18,00</p>
+        <button onclick="comprar('Copo 500ml')">Comprar</button>
+      </div>
+      <div class="produto-item">
+        <img src="acai-puro500.png" alt="Açaí Puro 500ml" />
+        <h3>Açaí Puro 500ml</h3>
+        <p>Sem complementos, só o açaí puro e delicioso.</p>
+        <p class="preco">R$ 15,00</p>
+        <button onclick="comprar('Açaí Puro 500ml')">Comprar</button>
+      </div>
+    </div>
+
+    <!-- Produto 3 -->
+    <div class="produto">
+      <div class="produto-item">
+        <img src="acai700.png" alt="Copo de Açaí 700ml" />
+        <h3>Copo 700ml</h3>
+        <p>Para os apaixonados por açaí, 700ml de pura felicidade.</p>
+        <p class="preco">R$ 20,00</p>
+        <button onclick="comprar('Copo 700ml')">Comprar</button>
+      </div>
+      <div class="produto-item">
+        <img src="acai-puro700.png" alt="Açaí Puro 700ml" />
+        <h3>Açaí Puro 700ml</h3>
+        <p>Sabor intenso, só o açaí natural, sem misturas.</p>
+        <p class="preco">R$ 18,00</p>
+        <button onclick="comprar('Açaí Puro 700ml')">Comprar</button>
+      </div>
+    </div>
+
+    <!-- Produto 4 -->
+    <div class="produto">
+      <div class="produto-item">
+        <img src="acai1L.png" alt="Copo de Açaí 1L" />
+        <h3>Copo 1L</h3>
+        <p>1 Litro de açaí, para compartilhar ou não 😋.</p>
+        <p class="preco">R$ 30,00</p>
+        <button onclick="comprar('Copo 1L')">Comprar</button>
+      </div>
+      <div class="produto-item">
+        <img src="acai-puro1L.png" alt="Açaí Puro 1L" />
+        <h3>Açaí Puro 1L</h3>
+        <p>O melhor açaí puro em maior quantidade.</p>
+        <p class="preco">R$ 25,00</p>
+        <button onclick="comprar('Açaí Puro 1L')">Comprar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <h2>Contato</h2>
+    <p>Peça também pelo nosso WhatsApp!</p>
+    <a href="https://wa.me/5527988451984" target="_blank" class="whatsapp-btn">Fale Conosco</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 LL AÇAITERIA & SORVETERIA. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <h2>Finalizar Pedido</h2>
+
+      <input type="hidden" id="produtoSelecionado">
+
+      <label>Endereço Completo:</label>
+      <input type="text" id="endereco" placeholder="Rua, número, bairro *" />
+
+      <label>Ponto de Referência:</label>
+      <input type="text" id="referencia" placeholder="Ex: Próximo ao mercado X" />
+
+      <label>É apartamento ou condomínio?</label>
+      <select id="tipoResidencia" onchange="mostrarCamposAdicionais()">
+        <option value="nao">Não</option>
+        <option value="sim">Sim</option>
+      </select>
+
+      <div id="dadosAdicionais" style="display: none;">
+        <label>Apto:</label>
+        <input type="text" id="apto" />
+        <label>Bloco:</label>
+        <input type="text" id="bloco" />
+        <label>Quadra:</label>
+        <input type="text" id="quadra" />
+        <label>Lote:</label>
+        <input type="text" id="lote" />
+      </div>
+
+      <label>Forma de Pagamento:</label>
+      <select id="pagamento" onchange="verificarPagamento()">
+        <option value="">Selecione</option>
+        <option value="Cartão de Crédito">Cartão de Crédito</option>
+        <option value="Pix">Pix</option>
+        <option value="Dinheiro">Dinheiro</option>
+      </select>
+
+      <div id="trocoContainer" style="display:none;">
+        <label>Vai precisar de troco?</label>
+        <select id="trocoSimNao" onchange="verificarTroco()">
+          <option value="nao">Não</option>
+          <option value="sim">Sim</option>
+        </select>
+      </div>
+
+      <div id="valorTrocoContainer" style="display:none;">
+        <label>Valor para Troco:</label>
+        <input type="number" id="valorTroco" min="0" />
+      </div>
+
+      <label>Telefone:</label>
+      <input type="text" id="telefone" placeholder="(DDD) Número *" />
+
+      <label>Email (opcional):</label>
+      <input type="email" id="email" placeholder="Seu email (opcional)" />
+
+      <button onclick="finalizarPedido()">Enviar Pedido</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

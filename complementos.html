@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monte seu Pedido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #toggle-btn {
+      background: #8d06af;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 10px;
+      width: fit-content;
+    }
+
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80%;
+      max-width: 300px;
+      height: 100%;
+      background: #8d06af;
+      color: white;
+      padding: 20px;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    #sidebar.open {
+      transform: translateX(0);
+    }
+
+    #sidebar h2 {
+      font-size: 1.4rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .categoria {
+      margin-bottom: 20px;
+    }
+
+    .categoria h3 {
+      font-size: 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+      margin-bottom: 10px;
+    }
+
+    .item {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item span {
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .preco {
+      font-size: 0.85rem;
+      color: #ffd700;
+    }
+
+    .item button {
+      padding: 6px 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background: white;
+      color: #8d06af;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #main {
+      padding: 20px;
+      flex: 1;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      color: #8d06af;
+      margin-bottom: 15px;
+    }
+
+    #lista-selecionados {
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      min-height: 150px;
+      font-size: 1rem;
+    }
+
+    #lista-selecionados ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #lista-selecionados li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #lista-selecionados li button {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #8d06af;
+      cursor: pointer;
+    }
+
+    #confirmar-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      background: #8d06af;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #confirmar-btn:hover {
+      background: #a308c4;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        flex-direction: row;
+      }
+
+      #sidebar {
+        position: relative;
+        transform: translateX(0);
+        width: 300px;
+      }
+
+      #toggle-btn {
+        display: none;
+      }
+
+      #main {
+        padding: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="toggle-btn">☰ Menu</button>
+
+  <aside id="sidebar">
+    <h2>Monte seu Pedido</h2>
+
+    <div class="categoria" data-limit="2">
+      <h3>Coberturas</h3>
+      <div class="item"><span>Leite Condensado</span><button data-item="Leite Condensado">+</button></div>
+      <div class="item"><span>Chocolate</span><button data-item="Chocolate">+</button></div>
+      <div class="item"><span>Morango</span><button data-item="Morango">+</button></div>
+    </div>
+
+    <div class="categoria" data-limit="2">
+      <h3>Frutas</h3>
+      <div class="item"><span>Banana</span><button data-item="Banana">+</button></div>
+      <div class="item"><span>Uva</span><button data-item="Uva">+</button></div>
+    </div>
+
+    <div class="categoria" data-limit="3">
+      <h3>Complementos</h3>
+      <div class="item"><span>Granola</span><button data-item="Granola">+</button></div>
+      <div class="item"><span>Leite em Pó</span><button data-item="Leite em Pó">+</button></div>
+      <div class="item"><span>Paçoca</span><button data-item="Paçoca">+</button></div>
+    </div>
+
+    <div class="categoria">
+      <h3>Adicionais</h3>
+      <div class="item"><span>KitKat <span class="preco">R$4</span></span><button data-item="KitKat">+</button></div>
+      <div class="item"><span>Bis <span class="preco">R$2</span></span><button data-item="Bis">+</button></div>
+    </div>
+  </aside>
+
+  <section id="main">
+    <h1>Seu Pedido</h1>
+    <div id="lista-selecionados">
+      <p>Nenhum item adicionado.</p>
+    </div>
+    <button id="confirmar-btn">Finalizar Pedido</button>
+  </section>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggle-btn');
+    const listaBox = document.getElementById('lista-selecionados');
+    const confirmar = document.getElementById('confirmar-btn');
+    let selecionados = [];
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    sidebar.querySelectorAll('button[data-item]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.getAttribute('data-item');
+        const categoria = btn.closest('.categoria');
+        const limite = categoria.getAttribute('data-limit');
+
+        if (limite) {
+          const itensDaCategoria = Array.from(categoria.querySelectorAll('button[data-item]')).map(b => b.getAttribute('data-item'));
+          const selecionadosDaCategoria = selecionados.filter(i => itensDaCategoria.includes(i));
+          if (selecionadosDaCategoria.length >= limite) {
+            alert(`Você pode escolher até ${limite} itens em "${categoria.querySelector('h3').textContent}"`);
+            return;
+          }
+        }
+
+        selecionados.push(item);
+        atualizarLista();
+      });
+    });
+
+    function atualizarLista() {
+      if (selecionados.length === 0) {
+        listaBox.innerHTML = '<p>Nenhum item adicionado.</p>';
+        return;
+      }
+      const ul = document.createElement('ul');
+      selecionados.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        const btn = document.createElement('button');
+        btn.textContent = '✕';
+        btn.onclick = () => {
+          selecionados.splice(idx, 1);
+          atualizarLista();
+        };
+        li.appendChild(btn);
+        ul.appendChild(li);
+      });
+      listaBox.innerHTML = '';
+      listaBox.appendChild(ul);
+    }
+
+    confirmar.addEventListener('click', () => {
+      if (selecionados.length === 0) {
+        alert('Adicione pelo menos um item ao pedido.');
+        return;
+      }
+      alert('Seu pedido: ' + selecionados.join(', '));
+    });
+  </script>
+
+</body>
+</html>
